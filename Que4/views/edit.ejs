@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Edit Employee</title></head>
+<body>
+  <h1>Edit Employee</h1>
+  <% if (error) { %><div style="color:red"><%= error %></div><% } %>
+  <form method="post" action="/admin/employees/edit/<%= emp._id %>">
+    <label>Name: <input name="name" value="<%= emp.name %>" required></label><br>
+    <label>Base Salary: <input name="baseSalary" type="number" value="<%= emp.baseSalary %>" required></label><br>
+    <label>HRA %: <input name="hraPercent" type="number" value="<%= emp.hraPercent %>"></label><br>
+    <label>DA %: <input name="daPercent" type="number" value="<%= emp.daPercent %>"></label><br>
+    <label>TAX %: <input name="taxPercent" type="number" value="<%= emp.taxPercent %>"></label><br>
+    <button type="submit">Save</button>
+  </form>
+  <p><a href="/admin/employees">Back</a></p>
+</body>
+</html>

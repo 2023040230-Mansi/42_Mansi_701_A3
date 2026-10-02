@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Free API Utility</title>
+  <style>body{font-family:system-ui,Arial;padding:20px} label{display:block;margin-top:8px} pre{background:#f5f5f5;padding:10px}</style>
+</head>
+<body>
+  <h1>Part 6 — Name Utilities (Free APIs)</h1>
+  <p>Enter a first name to get predicted age, gender, and nationality probabilities (using public free APIs).</p>
+  <form id="f">
+    <label>Name: <input id="name" required></label>
+    <button>Lookup</button>
+  </form>
+
+  <div id="out"></div>
+
+  <script>
+    const form = document.getElementById('f');
+    const out = document.getElementById('out');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      out.innerHTML = 'Loading...';
+      const name = document.getElementById('name').value.trim();
+      try {
+        const res = await fetch('/api/aggregate?name=' + encodeURIComponent(name));
+        if (!res.ok) throw new Error('Request failed');
+        const j = await res.json();
+        out.innerHTML = `<h3>Results for ${j.name}</h3>` +
+          `<pre>${JSON.stringify(j, null, 2)}</pre>` +
+          `<h4>Summary</h4>` +
+          `<p>Predicted age: <b>${j.age && j.age.age ? j.age.age : 'N/A'}</b> (count: ${j.age && j.age.count ? j.age.count : 0})</p>` +
+          `<p>Predicted gender: <b>${j.gender && j.gender.gender ? j.gender.gender : 'N/A'}</b> (probability: ${j.gender && j.gender.probability ? j.gender.probability : 0})</p>` +
+          `<p>Top nationalities:</p><ul>` +
+          (j.nationality && j.nationality.country ? j.nationality.country.slice(0,3).map(c=>`<li>${c.country_id} (${Math.round(c.probability*100)}%)</li>`).join('') : '<li>None</li>') +
+          `</ul>`;
+      } catch (err) {
+        out.innerHTML = '<div style="color:red">Error fetching data</div>';
+      }
+    })
+  </script>
+</body>
+</html>

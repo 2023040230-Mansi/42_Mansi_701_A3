@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Submission Result</title>
+  <style>table{border-collapse:collapse} td,th{border:1px solid #ccc;padding:6px}</style>
+</head>
+<body>
+  <h1>Submission</h1>
+  <table>
+    <tr><th>Field</th><th>Value</th></tr>
+    <tr><td>Username</td><td><%= submission.username %></td></tr>
+    <tr><td>Email</td><td><%= submission.email %></td></tr>
+    <tr><td>Gender</td><td><%= submission.gender %></td></tr>
+    <tr><td>Hobbies</td><td><%= submission.hobbies.join(', ') %></td></tr>
+    <tr><td>Profile Pic</td><td>
+      <% if (submission.profile) { %>
+        <img src="/uploads/<%= submission.profile %>" style="max-width:120px">
+      <% } else { %>None<% } %>
+    </td></tr>
+    <tr><td>Other Pics</td><td>
+      <% if (submission.others && submission.others.length) { %>
+        <% submission.others.forEach(function(p){ %>
+          <img src="/uploads/<%= p %>" style="max-width:100px;margin-right:6px">
+        <% }) %>
+      <% } else { %>None<% } %>
+    </td></tr>
+  </table>
+
+  <p><a href="/download/<%= submission.id %>">Download submission JSON</a></p>
+  <p><a href="/">Back to form</a></p>
+</body>
+</html>

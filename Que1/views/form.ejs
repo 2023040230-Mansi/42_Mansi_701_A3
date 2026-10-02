@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Registration Form</title>
+  <style>label{display:block;margin-top:8px} .err{color:red}</style>
+</head>
+<body>
+  <h1>Registration Form</h1>
+  <% const e = errors || {} %>
+  <form action="/submit" method="post" enctype="multipart/form-data">
+    <label>Username
+      <input type="text" name="username" value="<%= old.username || '' %>">
+      <% if (e.username) { %><div class="err"><%= e.username.msg %></div><% } %>
+    </label>
+
+    <label>Password
+      <input type="password" name="password">
+      <% if (e.password) { %><div class="err"><%= e.password.msg %></div><% } %>
+    </label>
+
+    <label>Confirm Password
+      <input type="password" name="confirmPassword">
+      <% if (e.confirmPassword) { %><div class="err"><%= e.confirmPassword.msg %></div><% } %>
+    </label>
+
+    <label>Email
+      <input type="email" name="email" value="<%= old.email || '' %>">
+      <% if (e.email) { %><div class="err"><%= e.email.msg %></div><% } %>
+    </label>
+
+    <label>Gender
+      <label><input type="radio" name="gender" value="Male" <%= old.gender==='Male' ? 'checked' : '' %>> Male</label>
+      <label><input type="radio" name="gender" value="Female" <%= old.gender==='Female' ? 'checked' : '' %>> Female</label>
+      <% if (e.gender) { %><div class="err"><%= e.gender.msg %></div><% } %>
+    </label>
+
+    <label>Hobbies
+      <label><input type="checkbox" name="hobbies" value="Reading" <%= (old.hobbies||[]).includes('Reading') ? 'checked' : '' %>> Reading</label>
+      <label><input type="checkbox" name="hobbies" value="Travel" <%= (old.hobbies||[]).includes('Travel') ? 'checked' : '' %>> Travel</label>
+      <label><input type="checkbox" name="hobbies" value="Music" <%= (old.hobbies||[]).includes('Music') ? 'checked' : '' %>> Music</label>
+    </label>
+
+    <label>Profile Picture (single, images only)
+      <input type="file" name="profilePic" accept="image/*">
+    </label>
+
+    <label>Other Pictures (multiple)
+      <input type="file" name="otherPics" accept="image/*" multiple>
+    </label>
+
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

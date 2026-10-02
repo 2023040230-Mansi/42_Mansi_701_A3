@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Employees</title>
+  <style>table{border-collapse:collapse} td,th{border:1px solid #ccc;padding:6px}</style>
+</head>
+<body>
+  <h1>Employees</h1>
+  <p><a href="/admin/employees/add">Add Employee</a> | <a href="/admin/logout">Logout</a></p>
+  <table>
+    <tr><th>EmpID</th><th>Name</th><th>Email</th><th>Net Salary</th><th>Actions</th></tr>
+    <% employees.forEach(function(e){ %>
+      <tr>
+        <td><%= e.empId %></td>
+        <td><%= e.name %></td>
+        <td><%= e.email %></td>
+        <td><%= e.netSalary %></td>
+        <td>
+          <a href="/admin/employees/edit/<%= e._id %>">Edit</a>
+          <form method="post" action="/admin/employees/delete/<%= e._id %>" style="display:inline" onsubmit="return confirm('Delete?')">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+</html>
